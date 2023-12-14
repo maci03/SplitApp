@@ -20,17 +20,48 @@ const initialFriends = [
 ];
 
 export default function App() {
-  return <div>hello</div>;
+  return (
+  <div className="app">
+    <div className="sidebar">
+      <FriendsList />
+    </div>
+  </div>
+  )
 }
 
-function friendsList() {
+function FriendsList() {
   const friends = initialFriends;
 
   return (
     <ul>
-      {friends.map((friends) => (
-        <li>{friends.name}</li>
+      {friends.map((friend) => (
+        <Friend friend={friend} key={friend.id} />
       ))}
     </ul>
   );
+}
+
+function Friend({friend}){
+  return(
+    <li>
+      <img src={friend.image} alt={friend.name} />
+      <h3>{friend.name}</h3>
+
+      {friend.balance < 0 && (
+        <p className="red">
+          you owe {friend.name} {Math.abs(friend.balance) } $
+        </p>
+      )}
+      {friend.balance > 0 && (
+        <p className="green">
+          you owe {friend.name} {Math.abs(friend.balance) } $
+        </p>
+      )}
+       {friend.balance === 0 && (
+        <p>
+          you owe {friend.name} {Math.abs(friend.balance) } $
+        </p>
+      )}
+    </li>
+  )
 }
